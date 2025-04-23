@@ -181,10 +181,22 @@ function filterUnfundedOnly() {
 
     // use filter() to get a list of games that have not yet met their goal
 
+    const unfundedGames =
+        GAMES_JSON.filter((game) =>{
+
+            return game.pledged < game.goal;
+
+        });
+
+        return unfundedGames;
+
+
 
     // use the function we previously created to add the unfunded games to the DOM
 
-}
+} // filterUnfundedOnly()
+
+
 
 // show only games that are fully funded
 function filterFundedOnly() {
@@ -192,10 +204,20 @@ function filterFundedOnly() {
 
     // use filter() to get a list of games that have met or exceeded their goal
 
+    const fundedGames =
+        GAMES_JSON.filter((game) =>{
+
+            return game.goal > game.pledged;
+
+        });
+
+        return fundedGames;
 
     // use the function we previously created to add unfunded games to the DOM
 
-}
+} // filterFundedOnly()
+
+
 
 // show all games
 function showAllGames() {
@@ -203,7 +225,9 @@ function showAllGames() {
 
     // add all games from the JSON data to the DOM
 
-}
+
+
+} // showAllGames()
 
 // select each button in the "Our Games" section
 const unfundedBtn = document.getElementById("unfunded-btn");
@@ -212,6 +236,35 @@ const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
 
+function unfundedBtnClick(){
+
+    const unfundedGames =
+        filterUnfundedOnly();
+    
+    unfundedBtn.addEventListener("click", ()=>{
+
+        addGamesToPage(unfundedGames);
+
+    }); // addEventListener()
+
+} // unfundedBtnClick()
+
+function fundedBtnClick(){
+
+    const fundedGames =
+        filterFundedOnly();
+
+    fundedBtn.addEventListener("click", ()=> {
+
+        addGamesToPage(fundedGames);
+
+    }); // addEventListener()
+
+} // fundedBtnClick()
+
+unfundedBtnClick();
+
+fundedBtnClick();
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
