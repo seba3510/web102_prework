@@ -125,7 +125,10 @@ function getTotalAmountRaised(){
         },0);
 
         const formatter =
-        new Intl.NumberFormat("en-US");
+        new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+        });
 
         const formattedTotal =
         formatter.format(total);
@@ -141,10 +144,28 @@ const totalRaised =
 raisedCard.innerHTML =
     totalRaised;
 
+function getNumGames(){
+
+    let total = 0;
+
+    GAMES_JSON.forEach(game => {
+
+        total++;
+        
+    }); // foreach
+
+    return total;
+
+} // getNumGames()
+
+const totalGamesPlayed =
+    getNumGames();
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
 
+gamesCard.innerHTML =
+    totalGamesPlayed;
 
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
