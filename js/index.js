@@ -90,6 +90,26 @@ const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
 
+function countTotalContributions(){
+
+    const total =
+        GAMES_JSON.reduce((accumulator, game)=> {
+
+            return accumulator +
+                    game.backers;
+
+    },0);
+
+    const formattedTotal =
+        total.toLocaleString();
+
+    contributionsCard.innerHTML =
+        formattedTotal;
+
+} // countTotalContributions()
+
+countTotalContributions();
+
 
 // set the inner HTML using a template literal and toLocaleString to get a number with commas
 
