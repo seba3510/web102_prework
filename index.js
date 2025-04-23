@@ -5,10 +5,11 @@
 */
 
 // import the JSON data about the crowd funded games from the games.js file
+import games from './games.js';
 import GAMES_DATA from './games.js';
 
 // create a list of objects to store the data about the games using JSON.parse
-const GAMES_JSON = JSON.parse(GAMES_DATA)
+const GAMES_JSON = JSON.parse(GAMES_DATA);
 
 // remove all child elements from a parent element in the DOM
 function deleteChildElements(parent) {
@@ -22,6 +23,7 @@ function deleteChildElements(parent) {
  * Skills used: DOM manipulation, for loops, template literals, functions
 */
 
+
 // grab the element with the id games-container
 const gamesContainer = document.getElementById("games-container");
 
@@ -29,6 +31,51 @@ const gamesContainer = document.getElementById("games-container");
 function addGamesToPage(games) {
 
     // loop over each item in the data
+
+    games.forEach((game => {
+
+
+        const gameCard =
+            document.createElement("div");
+
+        gameCard.setAttribute("class", "game-card");
+
+        const nameElem =
+            document.createElement("h2");
+
+        nameElem.innerText =
+            game.name;
+        
+        gameCard.append(nameElem);
+
+        const descriptionElem =
+            document.createElement("p");
+
+        descriptionElem.innerText =
+            game.description;
+        
+        gameCard.append(descriptionElem);
+
+        const imgContainer =
+            document.createElement("div");
+
+        const img =
+            document.createElement("img");
+
+        img.setAttribute("class", "game-img");
+
+        let imgPath =
+            game.img;
+
+        img.setAttribute("src", `${imgPath}`);
+
+        imgContainer.append(img);
+
+        gameCard.append(imgContainer);
+
+        gamesContainer.appendChild(gameCard);
+
+    })); // foreach
 
 
         // create a new div element, which will become the game card
@@ -45,10 +92,14 @@ function addGamesToPage(games) {
 
         // append the game to the games-container
 
-}
+        
+
+} // addGamesToPage()
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
+
+addGamesToPage(GAMES_JSON);
 
 
 /*************************************************************************************
