@@ -40,38 +40,15 @@ function addGamesToPage(games) {
 
         gameCard.setAttribute("class", "game-card");
 
-        const nameElem =
-            document.createElement("h2");
-
-        nameElem.innerText =
-            game.name;
-        
-        gameCard.append(nameElem);
-
-        const descriptionElem =
-            document.createElement("p");
-
-        descriptionElem.innerText =
-            game.description;
-        
-        gameCard.append(descriptionElem);
-
-        const imgContainer =
-            document.createElement("div");
-
-        const img =
-            document.createElement("img");
-
-        img.setAttribute("class", "game-img");
-
         let imgPath =
             game.img;
 
-        img.setAttribute("src", `${imgPath}`);
+        let info =
+            `<h2>${game.name}</h2>
+            <p>${game.description}</p>
+            <img class="game-img" src=${game.img} />`;
 
-        imgContainer.append(img);
-
-        gameCard.append(imgContainer);
+            gameCard.innerHTML = info;
 
         gamesContainer.appendChild(gameCard);
 
