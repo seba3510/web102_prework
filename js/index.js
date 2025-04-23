@@ -88,21 +88,86 @@ addGamesToPage(GAMES_JSON);
 // grab the contributions card element
 const contributionsCard = document.getElementById("num-contributions");
 
-// use reduce() to count the number of total contributions by summing the backers
 
+function getTotalContributions(){
+    
+    // use reduce() to count the number of total contributions by summing the backers
+    const total =
+        GAMES_JSON.reduce((accumulator, game)=> {
 
-// set the inner HTML using a template literal and toLocaleString to get a number with commas
+            return accumulator +
+                    game.backers;
+
+    },0);
+
+    const formattedTotal =
+        total.toLocaleString();
+
+        // set the inner HTML using a template literal and toLocaleString to get a number with commas
+    contributionsCard.innerHTML =
+        formattedTotal;
+
+} // countTotalContributions()
+
+getTotalContributions();
 
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
 
-// set inner HTML using template literal
+function getTotalAmountRaised(){
 
+    const total =
+        GAMES_JSON.reduce((accumulator, game) =>{
+
+            return accumulator +
+                    game.pledged;
+        },0);
+
+        const formatter =
+        new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        });
+
+        const formattedTotal =
+            formatter.format(total);
+
+        return formattedTotal;
+
+} // GetTotalAmountRaised()
+
+const totalRaised =
+    getTotalAmountRaised();
+
+// set inner HTML using template literal
+raisedCard.innerHTML =
+    totalRaised;
+
+function getNumGames(){
+
+    let total = 0;
+
+    GAMES_JSON.forEach(game => {
+
+        total++;
+        
+    }); // foreach
+
+    return total;
+
+} // getNumGames()
+
+const totalGamesPlayed =
+    getNumGames();
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
 
+gamesCard.innerHTML =
+    totalGamesPlayed;
 
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
