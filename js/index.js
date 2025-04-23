@@ -197,7 +197,6 @@ function filterUnfundedOnly() {
 } // filterUnfundedOnly()
 
 
-
 // show only games that are fully funded
 function filterFundedOnly() {
     deleteChildElements(gamesContainer);
@@ -225,7 +224,15 @@ function showAllGames() {
 
     // add all games from the JSON data to the DOM
 
+    const fundedGames =
+        filterFundedOnly();
 
+    const unfundedGames =
+        filterUnfundedOnly();
+
+    addGamesToPage(fundedGames);
+
+    addGamesToPage(unfundedGames);
 
 } // showAllGames()
 
@@ -262,9 +269,21 @@ function fundedBtnClick(){
 
 } // fundedBtnClick()
 
+function allBtnClick(){
+
+    allBtn.addEventListener("click", ()=>{
+
+        showAllGames();
+
+    });
+
+} // allBtnClick()
 unfundedBtnClick();
 
 fundedBtnClick();
+
+
+allBtnClick();
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
