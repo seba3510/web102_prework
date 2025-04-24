@@ -53,15 +53,17 @@ function addGamesToPage(games) {
 		gamesContainer.appendChild(gameCard);
 
 	})); // foreach
-		
 
 } // addGamesToPage()
+
+//================================================================================
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
 
 addGamesToPage(GAMES_JSON);
 
+//================================================================================
 
 /*************************************************************************************
  * Challenge 4: Create the summary statistics at the top of the page displaying the
@@ -93,11 +95,18 @@ function getTotalContributions(){
 
 } // countTotalContributions()
 
+//================================================================================
+
+
 getTotalContributions();
+
+//================================================================================
 
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
+
+//================================================================================
 
 function getTotalAmountRaised(){
 
@@ -123,6 +132,8 @@ function getTotalAmountRaised(){
 
 } // GetTotalAmountRaised()
 
+//================================================================================
+
 const totalRaised =
 	getTotalAmountRaised();
 
@@ -143,6 +154,8 @@ function getNumGames(){
 	return total;
 
 } // getNumGames()
+
+//================================================================================
 
 const totalGamesPlayed =
 	getNumGames();
@@ -176,6 +189,7 @@ function filterUnfundedOnly() {
 
 } // filterUnfundedOnly()
 
+//================================================================================
 
 // show only games that are fully funded
 function filterFundedOnly() {
@@ -213,6 +227,8 @@ function showAllGames() {
 	addGamesToPage(unfundedGames);
 
 } // showAllGames()
+
+//========================================================
 
 // select each button in the "Our Games" section
 const unfundedBtn = document.getElementById("unfunded-btn");
