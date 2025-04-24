@@ -174,10 +174,6 @@ function filterUnfundedOnly() {
 
         return unfundedGames;
 
-
-
-    // use the function we previously created to add the unfunded games to the DOM
-
 } // filterUnfundedOnly()
 
 
@@ -187,7 +183,14 @@ function filterFundedOnly() {
 
     // use filter() to get a list of games that have met or exceeded their goal
 
-    // use the function we previously created to add unfunded games to the DOM
+    const fundedGames =
+        GAMES_JSON.filter((game) =>{
+
+            return game.pledged > game.goal;
+
+        });
+
+        return fundedGames;
 
 } // filterFundedOnly()
 
@@ -212,7 +215,6 @@ function unfundedBtnClick(){
 
     unfundedBtn.addEventListener("click", ()=>{
 
-
         const unfundedGames =
             filterUnfundedOnly();
 
@@ -223,6 +225,24 @@ function unfundedBtnClick(){
 } // unfundedBtnClick()
 
 unfundedBtnClick();
+
+//================================================================================
+
+function fundedBtnClick(){
+
+    fundedBtn.addEventListener("click", ()=>{
+
+        const fundedGames =
+            filterFundedOnly();
+            
+        addGamesToPage(fundedGames);
+
+    });
+
+} // fundedBtnClick()
+
+fundedBtnClick();
+
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
  * Skills used: template literals, ternary operator
