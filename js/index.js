@@ -246,7 +246,7 @@ function unfundedBtnClick(){
 
 		addGamesToPage(unfundedGames);    
 
-	});
+	}); // addEventListener()
 
 } // unfundedBtnClick()
 
@@ -292,6 +292,19 @@ allBtnClick();
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
+
+function getTotalUnfundedGames(){
+
+	const unfundedGames =
+		filterUnfundedOnly();
+	
+	const total =
+		unfundedGames.length;
+
+	return total;
+	
+
+} // getTotalUnfundedGames()
 
 
 // create a string that explains the number of unfunded games using the ternary operator
