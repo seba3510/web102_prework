@@ -53,22 +53,6 @@ function addGamesToPage(games) {
         gamesContainer.appendChild(gameCard);
 
     })); // foreach
-
-
-        // create a new div element, which will become the game card
-
-
-        // add the class game-card to the list
-
-
-        // set the inner HTML using a template literal to display some info 
-        // about each game
-        // TIP: if your images are not displaying, make sure there is space
-        // between the end of the src attribute and the end of the tag ("/>")
-
-
-        // append the game to the games-container
-
         
 
 } // addGamesToPage()
@@ -203,15 +187,6 @@ function filterFundedOnly() {
 
     // use filter() to get a list of games that have met or exceeded their goal
 
-    const fundedGames =
-        GAMES_JSON.filter((game) =>{
-
-            return game.goal > game.pledged;
-
-        });
-
-        return fundedGames;
-
     // use the function we previously created to add unfunded games to the DOM
 
 } // filterFundedOnly()
@@ -224,16 +199,6 @@ function showAllGames() {
 
     // add all games from the JSON data to the DOM
 
-    const fundedGames =
-        filterFundedOnly();
-
-    const unfundedGames =
-        filterUnfundedOnly();
-
-    addGamesToPage(fundedGames);
-
-    addGamesToPage(unfundedGames);
-
 } // showAllGames()
 
 // select each button in the "Our Games" section
@@ -245,46 +210,19 @@ const allBtn = document.getElementById("all-btn");
 
 function unfundedBtnClick(){
 
-    const unfundedGames =
-        filterUnfundedOnly();
-    
     unfundedBtn.addEventListener("click", ()=>{
 
-        addGamesToPage(unfundedGames);
 
-    }); // addEventListener()
+        const unfundedGames =
+            filterUnfundedOnly();
 
-} // unfundedBtnClick()
-
-function fundedBtnClick(){
-
-    const fundedGames =
-        filterFundedOnly();
-
-    fundedBtn.addEventListener("click", ()=> {
-
-        addGamesToPage(fundedGames);
-
-    }); // addEventListener()
-
-} // fundedBtnClick()
-
-function allBtnClick(){
-
-    allBtn.addEventListener("click", ()=>{
-
-        showAllGames();
+        addGamesToPage(unfundedGames);    
 
     });
 
-} // allBtnClick()
+} // unfundedBtnClick()
+
 unfundedBtnClick();
-
-fundedBtnClick();
-
-
-allBtnClick();
-
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
  * Skills used: template literals, ternary operator
