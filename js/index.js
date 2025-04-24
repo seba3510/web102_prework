@@ -13,9 +13,9 @@ const GAMES_JSON = JSON.parse(GAMES_DATA);
 
 // remove all child elements from a parent element in the DOM
 function deleteChildElements(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
 }
 
 /*****************************************************************************
@@ -30,30 +30,30 @@ const gamesContainer = document.getElementById("games-container");
 // create a function that adds all data from the games array to the page
 function addGamesToPage(games) {
 
-    // loop over each item in the data
+	// loop over each item in the data
 
-    games.forEach((game => {
+	games.forEach((game => {
 
 
-        const gameCard =
-            document.createElement("div");
+		const gameCard =
+			document.createElement("div");
 
-        gameCard.setAttribute("class", "game-card");
+		gameCard.setAttribute("class", "game-card");
 
-        let imgPath =
-            game.img;
+		let imgPath =
+			game.img;
 
-        let info =
-            `<h2>${game.name}</h2>
-            <p>${game.description}</p>
-            <img class="game-img" src=${game.img} />`;
+		let info =
+			`<h2>${game.name}</h2>
+			<p>${game.description}</p>
+			<img class="game-img" src=${game.img} />`;
 
-            gameCard.innerHTML = info;
+			gameCard.innerHTML = info;
 
-        gamesContainer.appendChild(gameCard);
+		gamesContainer.appendChild(gameCard);
 
-    })); // foreach
-        
+	})); // foreach
+		
 
 } // addGamesToPage()
 
@@ -74,22 +74,22 @@ const contributionsCard = document.getElementById("num-contributions");
 
 
 function getTotalContributions(){
-    
-    // use reduce() to count the number of total contributions by summing the backers
-    const total =
-        GAMES_JSON.reduce((accumulator, game)=> {
+	
+	// use reduce() to count the number of total contributions by summing the backers
+	const total =
+		GAMES_JSON.reduce((accumulator, game)=> {
 
-            return accumulator +
-                    game.backers;
+			return accumulator +
+					game.backers;
 
-    },0);
+	},0);
 
-    const formattedTotal =
-        total.toLocaleString();
+	const formattedTotal =
+		total.toLocaleString();
 
-        // set the inner HTML using a template literal and toLocaleString to get a number with commas
-    contributionsCard.innerHTML =
-        formattedTotal;
+		// set the inner HTML using a template literal and toLocaleString to get a number with commas
+	contributionsCard.innerHTML =
+		formattedTotal;
 
 } // countTotalContributions()
 
@@ -101,57 +101,57 @@ const raisedCard = document.getElementById("total-raised");
 
 function getTotalAmountRaised(){
 
-    const total =
-        GAMES_JSON.reduce((accumulator, game) =>{
+	const total =
+		GAMES_JSON.reduce((accumulator, game) =>{
 
-            return accumulator +
-                    game.pledged;
-        },0);
+			return accumulator +
+					game.pledged;
+		},0);
 
-        const formatter =
-        new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-        });
+		const formatter =
+		new Intl.NumberFormat("en-US", {
+			style: "currency",
+			currency: "USD",
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 2
+		});
 
-        const formattedTotal =
-            formatter.format(total);
+		const formattedTotal =
+			formatter.format(total);
 
-        return formattedTotal;
+		return formattedTotal;
 
 } // GetTotalAmountRaised()
 
 const totalRaised =
-    getTotalAmountRaised();
+	getTotalAmountRaised();
 
 // set inner HTML using template literal
 raisedCard.innerHTML =
-    totalRaised;
+	totalRaised;
 
 function getNumGames(){
 
-    let total = 0;
+	let total = 0;
 
-    GAMES_JSON.forEach(game => {
+	GAMES_JSON.forEach(game => {
 
-        total++;
-        
-    }); // foreach
+		total++;
+		
+	}); // foreach
 
-    return total;
+	return total;
 
 } // getNumGames()
 
 const totalGamesPlayed =
-    getNumGames();
+	getNumGames();
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
 
 gamesCard.innerHTML =
-    totalGamesPlayed;
+	totalGamesPlayed;
 
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
@@ -161,46 +161,56 @@ gamesCard.innerHTML =
 
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
-    deleteChildElements(gamesContainer);
+	deleteChildElements(gamesContainer);
 
-    // use filter() to get a list of games that have not yet met their goal
+	// use filter() to get a list of games that have not yet met their goal
 
-    const unfundedGames =
-        GAMES_JSON.filter((game) =>{
+	const unfundedGames =
+		GAMES_JSON.filter((game) =>{
 
-            return game.pledged < game.goal;
+			return game.pledged < game.goal;
 
-        });
+		});
 
-        return unfundedGames;
+		return unfundedGames;
 
 } // filterUnfundedOnly()
 
 
 // show only games that are fully funded
 function filterFundedOnly() {
-    deleteChildElements(gamesContainer);
+	deleteChildElements(gamesContainer);
 
-    // use filter() to get a list of games that have met or exceeded their goal
+	// use filter() to get a list of games that have met or exceeded their goal
 
-    const fundedGames =
-        GAMES_JSON.filter((game) =>{
+	const fundedGames =
+		GAMES_JSON.filter((game) =>{
 
-            return game.pledged > game.goal;
+			return game.pledged > game.goal;
 
-        });
+		});
 
-        return fundedGames;
+		return fundedGames;
 
 } // filterFundedOnly()
 
-
+//=====================================================================
 
 // show all games
 function showAllGames() {
-    deleteChildElements(gamesContainer);
+	deleteChildElements(gamesContainer);
 
-    // add all games from the JSON data to the DOM
+	// add all games from the JSON data to the DOM
+
+	const fundedGames =
+		filterFundedOnly();
+		
+	const unfundedGames =
+		filterUnfundedOnly();
+
+	addGamesToPage(fundedGames);
+
+	addGamesToPage(unfundedGames);
 
 } // showAllGames()
 
@@ -213,14 +223,14 @@ const allBtn = document.getElementById("all-btn");
 
 function unfundedBtnClick(){
 
-    unfundedBtn.addEventListener("click", ()=>{
+	unfundedBtn.addEventListener("click", ()=>{
 
-        const unfundedGames =
-            filterUnfundedOnly();
+		const unfundedGames =
+			filterUnfundedOnly();
 
-        addGamesToPage(unfundedGames);    
+		addGamesToPage(unfundedGames);    
 
-    });
+	});
 
 } // unfundedBtnClick()
 
@@ -230,18 +240,32 @@ unfundedBtnClick();
 
 function fundedBtnClick(){
 
-    fundedBtn.addEventListener("click", ()=>{
+	fundedBtn.addEventListener("click", ()=>{
 
-        const fundedGames =
-            filterFundedOnly();
-            
-        addGamesToPage(fundedGames);
+		const fundedGames =
+			filterFundedOnly();
+			
+		addGamesToPage(fundedGames);
 
-    });
+	});
 
 } // fundedBtnClick()
 
 fundedBtnClick();
+
+//================================================================================
+
+function allBtnClick(){
+
+	allBtn.addEventListener("click", ()=>{
+
+		showAllGames();
+
+	});
+
+} // allBtnClick()
+
+allBtnClick();
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
@@ -268,7 +292,7 @@ const firstGameContainer = document.getElementById("first-game");
 const secondGameContainer = document.getElementById("second-game");
 
 const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
-    return item2.pledged - item1.pledged;
+	return item2.pledged - item1.pledged;
 });
 
 // use destructuring and the spread operator to grab the first and second games
