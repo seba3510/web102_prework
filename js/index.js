@@ -28,7 +28,7 @@
 
 	// create a function that adds all data from the games array to the page
 	function addGamesToPage(games) {
-
+		
 		games.forEach((game) => {
 
 			const gameCard = 
@@ -49,6 +49,8 @@
 			gamesContainer.appendChild(gameCard);
 
 		}); // foreach
+
+		// gamesContainer.append(table);
 
 	} // addGamesToPage()
 
@@ -214,25 +216,10 @@
 	// show all games
 	function showAllGames() {
 
-		deleteChildElements(gamesContainer);
+		
+		// deleteChildElements(gamesContainer);
 
-		const tableContainer =
-			document.querySelector("#table-container");
-
-		const table =
-			document.createElement("table");
-
-		const tableHeader =
-			document.createElement("thead")	;
-
-		appendTableHeader(tableHeader, table);			
-
-		const tableBody =
-			document.createElement("tbody");
-
-		appendTableBody(tableBody, table, GAMES_JSON);
-
-		tableContainer.appendChild(table);	
+		addGamesToPage(GAMES_JSON);
 
 	} // showAllGames()
 
@@ -244,6 +231,8 @@
 	const allBtn = document.getElementById("all-btn");
 
 function appendTableBody(tableBody, table, games) {
+
+	// deleteChildElements(tableContainer);
 	games.forEach((game) => {
 
 		const contentRow = document.createElement("tr");
@@ -256,7 +245,7 @@ function appendTableBody(tableBody, table, games) {
 		nameCell.innerHTML =
 			game.name;
 
-		contentRow.appendChild(nameCell);
+		// contentRow.appendChild(nameCell);
 
 		const descriptionCell = document.createElement("td");
 
@@ -266,7 +255,7 @@ function appendTableBody(tableBody, table, games) {
 		descriptionCell.innerHTML =
 			game.description;
 
-		contentRow.appendChild(descriptionCell);
+		// contentRow.appendChild(descriptionCell);
 
 		const posterCell = document.createElement("td");
 
@@ -275,14 +264,21 @@ function appendTableBody(tableBody, table, games) {
 
 		poster.setAttribute("src", `${game.img}`);
 
-		posterCell.append(poster);
+		posterCell.appendChild(poster);
 
-		contentRow.appendChild(posterCell);
+		// contentRow.append(posterCell);
 
-		tableBody.append(contentRow);
+		contentRow.append(nameCell);
 
+		contentRow.append(descriptionCell);
+
+		contentRow.append(posterCell);
+
+		tableBody.appendChild(contentRow);
+
+		
 	}); // foreach
-
+	
 	table.appendChild(tableBody);
 
 } // appendTableBody()
@@ -307,10 +303,9 @@ function appendTableHeader(tableHeader, table) {
 
 	posterHeaderCell.textContent =
 		"Image";
+
+	tableHeader.appendChild(posterHeaderCell);	
 	
-
-	tableHeader.appendChild(posterHeaderCell);
-
 	table.appendChild(tableHeader);
 
 } // appendTableHeader()
@@ -318,8 +313,13 @@ function appendTableHeader(tableHeader, table) {
 	// add event listeners with the correct functions to each button
 
 	function unfundedBtnClick() {
+
 		
 		unfundedBtn.addEventListener("click", () => {
+			
+			// deleteChildElements(gamesContainer);
+
+			// clearTable();
 		
 			const unfundedGames = 
 				filterUnfundedOnly();
@@ -344,16 +344,18 @@ function appendTableHeader(tableHeader, table) {
 	} // unfundedBtnClick()
 
 	unfundedBtnClick();
-
 	//================================================================================
 
 	function fundedBtnClick() {
 
+		
+		fundedBtn.addEventListener("click", ()=>{
+			
+			// deleteChildElements(gamesContainer);
+			
 		const fundedGames =
 			filterFundedOnly();
-
-		fundedBtn.addEventListener("click", ()=>{
-
+			
 		const table =
 			document.createElement("table");	
 
@@ -381,13 +383,28 @@ function appendTableHeader(tableHeader, table) {
 
 		allBtn.addEventListener("click", ()=>{
 
-			showAllGames();
+				const table =
+					document.createElement("table");
+				
+					const tableHeader =
+					document.createElement("thead");	
 
+			appendTableHeader(tableHeader, table);
+			
+			const tableBody =
+				document.createElement("tbody");
+
+			appendTableBody(tableBody, table, filterFundedOnly());
+
+			appendTableBody(tableBody, table, filterUnfundedOnly());
+
+			gamesContainer.appendChild(table);
+			
 		});
 
 	} // allBtnClick()
 
-	
+	allBtnClick();
 
 	/*************************************************************************************
 	 * Challenge 6: Add more information at the top of the page about the company.
@@ -513,7 +530,6 @@ function appendTableHeader(tableHeader, table) {
 	const  [first, second, ...others] =
 		sortedGames;
 
-
 	// create a new element to hold the name of the top pledge game, then append it to the correct element
 		
 	function displayTopFundedGame(){
@@ -540,7 +556,7 @@ function appendTableHeader(tableHeader, table) {
 		secondGameContainer.appendChild(para);
 			
 	} // displayRunnerUp()
-		
+
 	displayRunnerUp();
 
-	allBtnClick();
+	//================================================================================
