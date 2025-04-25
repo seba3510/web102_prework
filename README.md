@@ -2,7 +2,7 @@
 
 Submitted by: **Sebastián L. Corporán Berríos**
 
-**SeaMonsterCrownFundingApp** is a website for the company Sea Monster Crowdfunding that displays information about the games they have funded.
+**SeaMonsterFundingApp** is a website for the company Sea Monster Crowdfunding that displays information about the games they have funded.
 
 Time spent: **80** hours spent in total
 
@@ -17,7 +17,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [ ] Display all games in a dynamically created table
+* [ ] Change name of title bar, and add an icon
 
 ## Video Walkthrough
 
@@ -38,7 +39,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Sebastián L. Corporán Berríos]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
