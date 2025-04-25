@@ -1,562 +1,441 @@
-	/*****************************************************************************
-	 * Challenge 2: Review the provided code. The provided code includes:
-	 * -> Statements that import data from games.js
-	 * -> A function that deletes all child elements from a parent element in the DOM
-	 */
+/*****************************************************************************
+ * Challenge 2: Review the provided code. The provided code includes:
+ * -> Statements that import data from games.js
+ * -> A function that deletes all child elements from a parent element in the DOM
+ */
 
-	// import the JSON data about the crowd funded games from the games.js file
-	import games from "./games.js";
-	import GAMES_DATA from "./games.js";
+// import the JSON data about the crowd funded games from the games.js file
+import games from "./games.js";
+import GAMES_DATA from "./games.js";
 
-	// create a list of objects to store the data about the games using JSON.parse
-	const GAMES_JSON = JSON.parse(GAMES_DATA);
+// create a list of objects to store the data about the games using JSON.parse
+const GAMES_JSON = JSON.parse(GAMES_DATA);
 
-	// remove all child elements from a parent element in the DOM
-	function deleteChildElements(parent) {
-	while (parent.firstChild) {
-		parent.removeChild(parent.firstChild);
-	}
-	}
+// remove all child elements from a parent element in the DOM
+function deleteChildElements(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
 
-	/*****************************************************************************
-	 * Challenge 3: Add data about each game as a card to the games-container
-	 * Skills used: DOM manipulation, for loops, template literals, functions
-	 */
+/*****************************************************************************
+ * Challenge 3: Add data about each game as a card to the games-container
+ * Skills used: DOM manipulation, for loops, template literals, functions
+ */
 
-	// grab the element with the id games-container
-	const gamesContainer = document.getElementById("games-container");
+// grab the element with the id games-container
+const gamesContainer = document.getElementById("games-container");
 
-	// create a function that adds all data from the games array to the page
-	function addGamesToPage(games) {
-		
-		games.forEach((game) => {
+// create a function that adds all data from the games array to the page
+function addGamesToPage(games) {
+  games.forEach((game) => {
+    const gameCard = document.createElement("div");
 
-			const gameCard = 
-				document.createElement("div");
+    gameCard.setAttribute("class", "game-card");
 
-			gameCard.setAttribute("class", "game-card");
+    let imgPath = game.img;
 
-			let imgPath = 
-				game.img;
-
-			let info = `<h2>${game.name}</h2>
+    let info = `<h2>${game.name}</h2>
 					<p>${game.description}</p>
 					<img class="game-img" src=${imgPath} />`;
 
-			gameCard.innerHTML = 
-				info;
+    gameCard.innerHTML = info;
 
-			gamesContainer.appendChild(gameCard);
+    gamesContainer.appendChild(gameCard);
+  }); // foreach
 
-		}); // foreach
+  // gamesContainer.append(table);
+} // addGamesToPage()
 
-		// gamesContainer.append(table);
+//================================================================================
 
-	} // addGamesToPage()
+// call the function we just defined using the correct variable
+// later, we'll call this function using a different list of games
 
-	//================================================================================
+addGamesToPage(GAMES_JSON);
 
-	// call the function we just defined using the correct variable
-	// later, we'll call this function using a different list of games
+//================================================================================
 
-	addGamesToPage(GAMES_JSON);
+/*************************************************************************************
+ * Challenge 4: Create the summary statistics at the top of the page displaying the
+ * total number of contributions, amount donated, and number of games on the site.
+ * Skills used: arrow functions, reduce, template literals
+ */
 
-	//================================================================================
+// grab the contributions card element
+const contributionsCard = document.getElementById("num-contributions");
 
-	/*************************************************************************************
-	 * Challenge 4: Create the summary statistics at the top of the page displaying the
-	 * total number of contributions, amount donated, and number of games on the site.
-	 * Skills used: arrow functions, reduce, template literals
-	 */
+//================================================================================
 
-	// grab the contributions card element
-	const contributionsCard = document.getElementById("num-contributions");
+function getTotalContributions() {
+  const total = GAMES_JSON.reduce((acc, game) => {
+    return acc + game.backers;
+  }, 0);
 
-	//================================================================================
+  const formattedTotal = total.toLocaleString();
 
-	function getTotalContributions() {
+  contributionsCard.innerHTML = formattedTotal;
+} // getTotalContributions()
 
-		const total =
-			GAMES_JSON.reduce((acc, game) =>{
+//================================================================================
 
-				return acc +
-						game.backers;
+getTotalContributions();
 
-			},0);
+//================================================================================
 
-		const formattedTotal =
-			total.toLocaleString();
-			
-		contributionsCard.innerHTML =
-			formattedTotal;	
+// grab the amount raised card, then use reduce() to find the total amount raised
+const raisedCard = document.getElementById("total-raised");
 
-	} // getTotalContributions()
+//================================================================================
 
-	//================================================================================
+function getTotalAmountRaised() {
+  const total = GAMES_JSON.reduce((acc, game) => {
+    return acc + game.pledged;
+  }, 0);
 
-	getTotalContributions();
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
 
-	//================================================================================
+  const formattedTotal = formatter.format(total);
 
-	// grab the amount raised card, then use reduce() to find the total amount raised
-	const raisedCard = document.getElementById("total-raised");
+  return formattedTotal;
+} // GetTotalAmountRaised()
 
-	//================================================================================
+getTotalAmountRaised();
 
-	function getTotalAmountRaised() {
+//================================================================================
 
-		const total =
-			GAMES_JSON.reduce((acc, game) =>{
+const totalRaised = getTotalAmountRaised();
 
-				return acc + game.pledged;
+// set inner HTML using template literal
+raisedCard.innerHTML = totalRaised;
 
-			},0);
+//================================================================================
 
-		const formatter =
-			new Intl.NumberFormat("en-US", {
-				style: "currency",
-				currency: "USD",
-				minimumFractionDigits: 0,
-				maximumFractionDigits: 2,
-			});	
+function getTotalGamesPlayed() {
+  const numUnfundedGames = filterUnfundedOnly().length;
 
-		const formattedTotal =
-			formatter.format(total);
-		
-			
-		return formattedTotal;	
+  const numFundedGames = filterFundedOnly().length;
 
-	} // GetTotalAmountRaised()
+  const total = numFundedGames + numUnfundedGames;
 
-	getTotalAmountRaised();
+  return total;
+} // getTotalGamesPlayed()
 
-	//================================================================================
+//================================================================================
 
-	const totalRaised = 
-		getTotalAmountRaised();
+// grab number of games card and set its inner HTML
+const totalGamesPlayed = getTotalGamesPlayed();
 
-	// set inner HTML using template literal
-	raisedCard.innerHTML =
-		totalRaised;
+const gamesCard = document.getElementById("num-games");
 
-	//================================================================================
+gamesCard.innerHTML = totalGamesPlayed;
 
-	function getTotalGamesPlayed() {
+/*************************************************************************************
+ * Challenge 5: Add functions to filter the funded and unfunded games
+ * total number of contributions, amount donated, and number of games on the site.
+ * Skills used: functions, filter
+ */
 
-		const numUnfundedGames =
-			filterUnfundedOnly().length;
+// show only games that do not yet have enough funding
+function filterUnfundedOnly() {
+  deleteChildElements(gamesContainer);
 
-		const numFundedGames =
-			filterFundedOnly().length;
-			
-		const total =
-			numFundedGames +
-			numUnfundedGames;
-			
-		return total;	
-		
-	} // getTotalGamesPlayed()
+  const unfundedGames = GAMES_JSON.filter((game) => {
+    return game.pledged < game.goal;
+  }); // filter()
 
-	//================================================================================
+  return unfundedGames;
+} // filterUnfundedOnly()
 
-	// grab number of games card and set its inner HTML
-	const totalGamesPlayed = 
-		getTotalGamesPlayed();
+//================================================================================
 
-	const gamesCard = 
-		document.getElementById("num-games");
+// show only games that are fully funded
+function filterFundedOnly() {
+  deleteChildElements(gamesContainer);
 
-	gamesCard.innerHTML = 
-		totalGamesPlayed;
+  const fundedGames = GAMES_JSON.filter((game) => {
+    return game.pledged >= game.goal;
+  }); // filter()
 
-	/*************************************************************************************
-	 * Challenge 5: Add functions to filter the funded and unfunded games
-	 * total number of contributions, amount donated, and number of games on the site.
-	 * Skills used: functions, filter
-	 */
+  return fundedGames;
+} // filterFundedOnly()
 
-	// show only games that do not yet have enough funding
-	function filterUnfundedOnly() {
+//=====================================================================
 
-		deleteChildElements(gamesContainer);
+// show all games
+function showAllGames() {
+  // deleteChildElements(gamesContainer);
 
-		const unfundedGames =
-			GAMES_JSON.filter((game) =>{
+  addGamesToPage(GAMES_JSON);
+} // showAllGames()
 
-				return game.pledged
-						< game.goal;
-				
-			}); // filter()
+//========================================================
 
-		return unfundedGames;	
-
-	} // filterUnfundedOnly()
-
-	//================================================================================
-
-	// show only games that are fully funded
-	function filterFundedOnly() {
-
-		deleteChildElements(gamesContainer);
-
-		const fundedGames =
-			GAMES_JSON.filter((game)=>{
-
-				return game.pledged
-						>= game.goal;
-
-			}); // filter()
-
-		return fundedGames;	
-
-	} // filterFundedOnly()
-
-	//=====================================================================
-
-	// show all games
-	function showAllGames() {
-
-		
-		// deleteChildElements(gamesContainer);
-
-		addGamesToPage(GAMES_JSON);
-
-	} // showAllGames()
-
-	//========================================================
-
-	// select each button in the "Our Games" section
-	const unfundedBtn = document.getElementById("unfunded-btn");
-	const fundedBtn = document.getElementById("funded-btn");
-	const allBtn = document.getElementById("all-btn");
+// select each button in the "Our Games" section
+const unfundedBtn = document.getElementById("unfunded-btn");
+const fundedBtn = document.getElementById("funded-btn");
+const allBtn = document.getElementById("all-btn");
 
 function appendTableBody(tableBody, table, games) {
+  // deleteChildElements(tableContainer);
+  games.forEach((game) => {
+    const contentRow = document.createElement("tr");
 
-	// deleteChildElements(tableContainer);
-	games.forEach((game) => {
+    const nameCell = document.createElement("td");
 
-		const contentRow = document.createElement("tr");
+    nameCell.style.textAlign = "left";
 
-		const nameCell = document.createElement("td");
+    nameCell.innerHTML = game.name;
 
-		nameCell.style.textAlign =
-			"left";
+    // contentRow.appendChild(nameCell);
 
-		nameCell.innerHTML =
-			game.name;
+    const descriptionCell = document.createElement("td");
 
-		// contentRow.appendChild(nameCell);
+    descriptionCell.style.textAlign = "left";
 
-		const descriptionCell = document.createElement("td");
+    descriptionCell.innerHTML = game.description;
 
-		descriptionCell.style.textAlign =
-			"left";
+    // contentRow.appendChild(descriptionCell);
 
-		descriptionCell.innerHTML =
-			game.description;
+    const posterCell = document.createElement("td");
 
-		// contentRow.appendChild(descriptionCell);
+    const poster = document.createElement("img");
 
-		const posterCell = document.createElement("td");
+    poster.setAttribute("src", `${game.img}`);
 
+    posterCell.appendChild(poster);
 
-		const poster = document.createElement("img");
+    // contentRow.append(posterCell);
 
-		poster.setAttribute("src", `${game.img}`);
+    contentRow.append(nameCell);
 
-		posterCell.appendChild(poster);
+    contentRow.append(descriptionCell);
 
-		// contentRow.append(posterCell);
+    contentRow.append(posterCell);
 
-		contentRow.append(nameCell);
+    tableBody.appendChild(contentRow);
+  }); // foreach
 
-		contentRow.append(descriptionCell);
-
-		contentRow.append(posterCell);
-
-		tableBody.appendChild(contentRow);
-
-		
-	}); // foreach
-	
-	table.appendChild(tableBody);
-
+  table.appendChild(tableBody);
 } // appendTableBody()
 
 function appendTableHeader(tableHeader, table) {
+  const nameHeaderCell = document.createElement("th");
 
-	const nameHeaderCell = document.createElement("th");
+  nameHeaderCell.textContent = "Game";
 
-	nameHeaderCell.textContent =
-		"Game";
+  tableHeader.appendChild(nameHeaderCell);
 
-	tableHeader.appendChild(nameHeaderCell);
+  const descriptionHeaderCell = document.createElement("th");
 
-	const descriptionHeaderCell = document.createElement("th");
+  descriptionHeaderCell.innerHTML = "Description";
 
-	descriptionHeaderCell.innerHTML =
-		"Description";
+  tableHeader.appendChild(descriptionHeaderCell);
 
-	tableHeader.appendChild(descriptionHeaderCell);
+  const posterHeaderCell = document.createElement("th");
 
-	const posterHeaderCell = document.createElement("th");
+  posterHeaderCell.textContent = "Image";
 
-	posterHeaderCell.textContent =
-		"Image";
+  tableHeader.appendChild(posterHeaderCell);
 
-	tableHeader.appendChild(posterHeaderCell);	
-	
-	table.appendChild(tableHeader);
-
+  table.appendChild(tableHeader);
 } // appendTableHeader()
 
-	// add event listeners with the correct functions to each button
+// add event listeners with the correct functions to each button
 
-	function unfundedBtnClick() {
+function unfundedBtnClick() {
+  unfundedBtn.addEventListener("click", () => {
+    // deleteChildElements(gamesContainer);
 
-		
-		unfundedBtn.addEventListener("click", () => {
-			
-			// deleteChildElements(gamesContainer);
+    // clearTable();
 
-			// clearTable();
-		
-			const unfundedGames = 
-				filterUnfundedOnly();
+    const unfundedGames = filterUnfundedOnly();
 
-			const table =
-				document.createElement("table");	
+    const table = document.createElement("table");
 
-			const tableHeader =
-				document.createElement("thead");
+    const tableHeader = document.createElement("thead");
 
-			appendTableHeader(tableHeader, table);
-			
-			const tableBody =
-				document.createElement("tbody");
+    appendTableHeader(tableHeader, table);
 
-			appendTableBody(tableBody, table, unfundedGames);	
+    const tableBody = document.createElement("tbody");
 
-			gamesContainer.appendChild(table);
+    appendTableBody(tableBody, table, unfundedGames);
 
-		}); // addEventListener()
+    gamesContainer.appendChild(table);
+  }); // addEventListener()
+} // unfundedBtnClick()
 
-	} // unfundedBtnClick()
+unfundedBtnClick();
+//================================================================================
 
-	unfundedBtnClick();
-	//================================================================================
+function fundedBtnClick() {
+  fundedBtn.addEventListener("click", () => {
+    // deleteChildElements(gamesContainer);
 
-	function fundedBtnClick() {
+    const fundedGames = filterFundedOnly();
 
-		
-		fundedBtn.addEventListener("click", ()=>{
-			
-			// deleteChildElements(gamesContainer);
-			
-		const fundedGames =
-			filterFundedOnly();
-			
-		const table =
-			document.createElement("table");	
+    const table = document.createElement("table");
 
-		const tableHeader =
-			document.createElement("thead");
+    const tableHeader = document.createElement("thead");
 
-		appendTableHeader(tableHeader, table);
-		
-		const tableBody =
-			document.createElement("tbody");
+    appendTableHeader(tableHeader, table);
 
-		appendTableBody(tableBody, table, fundedGames);	
+    const tableBody = document.createElement("tbody");
 
-		gamesContainer.appendChild(table);
+    appendTableBody(tableBody, table, fundedGames);
 
-		}); // addEventListener()
-		
-	} // fundedBtnClick()
+    gamesContainer.appendChild(table);
+  }); // addEventListener()
+} // fundedBtnClick()
 
-	fundedBtnClick();
+fundedBtnClick();
 
-	//================================================================================
+//================================================================================
 
-	function allBtnClick(){
+function allBtnClick() {
+  allBtn.addEventListener("click", () => {
+    const table = document.createElement("table");
 
-		allBtn.addEventListener("click", ()=>{
+    const tableHeader = document.createElement("thead");
 
-				const table =
-					document.createElement("table");
-				
-					const tableHeader =
-					document.createElement("thead");	
+    appendTableHeader(tableHeader, table);
 
-			appendTableHeader(tableHeader, table);
-			
-			const tableBody =
-				document.createElement("tbody");
+    const tableBody = document.createElement("tbody");
 
-			appendTableBody(tableBody, table, filterFundedOnly());
+    appendTableBody(tableBody, table, filterFundedOnly());
 
-			appendTableBody(tableBody, table, filterUnfundedOnly());
+    appendTableBody(tableBody, table, filterUnfundedOnly());
 
-			gamesContainer.appendChild(table);
-			
-		});
+    gamesContainer.appendChild(table);
+  });
+} // allBtnClick()
 
-	} // allBtnClick()
+allBtnClick();
 
-	allBtnClick();
+/*************************************************************************************
+ * Challenge 6: Add more information at the top of the page about the company.
+ * Skills used: template literals, ternary operator
+ */
 
-	/*************************************************************************************
-	 * Challenge 6: Add more information at the top of the page about the company.
-	 * Skills used: template literals, ternary operator
-	 */
+// grab the description container
+const descriptionContainer = document.getElementById("description-container");
 
-	// grab the description container
-	const descriptionContainer = 
-		document.getElementById("description-container");
+// use filter or reduce to count the number of unfunded games
+function getTotalUnfundedGames() {
+  const total = filterUnfundedOnly().length;
 
-	// use filter or reduce to count the number of unfunded games
-	function getTotalUnfundedGames() {
+  return total;
+} // getTotalUnfundedGames()
 
-		const total =
-			filterUnfundedOnly().length;
+//================================================================================
 
-		return total;	
-		
-	} // getTotalUnfundedGames()
+// create a string that explains the number of unfunded games using the ternary operator
+function getUnfundedGamesDescription() {
+  const totalRaised = getTotalAmountRaised();
 
-	//================================================================================
+  const totalUnfundedGames = getTotalUnfundedGames();
 
-	// create a string that explains the number of unfunded games using the ternary operator
-	function getUnfundedGamesDescription() {
+  const totalGames = getTotalGamesPlayed();
 
-		const totalRaised =
-			getTotalAmountRaised();
+  const remainingUnfundedGames = totalGames - totalUnfundedGames;
 
-		const totalUnfundedGames =
-			getTotalUnfundedGames();
+  const string1 =
+    `A total of ${totalRaised} has been raised for ${totalGames} games. ` +
+    `Currently, 1 game remains unfunded.  ` +
+    `We need your help to fund these amazing games!`;
 
-		const totalGames =
-			getTotalGamesPlayed();
-			
-		const remainingUnfundedGames =
-			totalGames - totalUnfundedGames;	
-			
-		const string1 =
-			`A total of ${totalRaised} has been raised for ${totalGames} games. `+
-			`Currently, 1 game remains unfunded.  `+
-			`We need your help to fund these amazing games!`;
-		
-		const string2 =	
-			`A total of ${totalRaised} has been raised for ${totalGames} games. `+
-			`Currently, ${remainingUnfundedGames} games remain unfunded.  `+
-			`We need your help to fund these amazing games!`;
-
-		const isOneGameFunded =
-			totalUnfundedGames === 1;
-
-		return 	isOneGameFunded ? string1
-				: string2;
-
-	} // getUnfundedGamesDescription()
-
-	//================================================================================
-
-	function getTotalRaisedForUnfunded() {
-
-		const unfundedGames =
-			filterFundedOnly();
-
-		let total =
-			Number(0);
-			
-		unfundedGames.forEach(game => {
-
-			total +=
-				game.pledged;
-			
-		});	// foreach
-		
-		const formatter =
-			new Intl.NumberFormat("en-US",{
-				style: "currency",
-				currency: "USD",
-				minimumFractionDigits: 0,
-				maximumFractionDigits: 2,
-			}); // NumberFormat()
-
-		const formattedTotal =
-			formatter.format(total);
-			
-		return formattedTotal;	
-
-	} // getTotalRaisedForUnfunded()
-
-	//================================================================================
-
-	// create a new DOM element containing the template string and append it to the description container
-
-	function displayUnfundedGamesDescription(){
-
-		const para =
-			document.createElement("p");
-
-		const description =
-			getUnfundedGamesDescription();
-			
-		para.append(description);
-		
-		descriptionContainer.appendChild(para);	
-
-	} // displayUnfundedGamesDescription()
-
-	displayUnfundedGamesDescription();
-
-	/************************************************************************************
-	 * Challenge 7: Select & display the top 2 games
-	 * Skills used: spread operator, destructuring, template literals, sort
-	 */
-
-	const firstGameContainer = document.getElementById("first-game");
-	const secondGameContainer = document.getElementById("second-game");
-
-	const sortedGames = GAMES_JSON.sort((item1, item2) => {
-	return item2.pledged - item1.pledged;
-	});
-
-
-	// use destructuring and the spread operator to grab the first and second games
-
-	const  [first, second, ...others] =
-		sortedGames;
-
-	// create a new element to hold the name of the top pledge game, then append it to the correct element
-		
-	function displayTopFundedGame(){
-		const para =
-			document.createElement("p");
-
-		para.append(first.name);
-			
-		firstGameContainer.appendChild(para);
-
-	} // displayTopFundedGame()
-		
-	displayTopFundedGame();
-		
-		// do the same for the runner up item
-		
-		function displayRunnerUp(){
-			
-			const para =
-			document.createElement("p");
-			
-			para.append(second.name);	
-			
-		secondGameContainer.appendChild(para);
-			
-	} // displayRunnerUp()
-
-	displayRunnerUp();
-
-	//================================================================================
+  const string2 =
+    `A total of ${totalRaised} has been raised for ${totalGames} games. ` +
+    `Currently, ${remainingUnfundedGames} games remain unfunded.  ` +
+    `We need your help to fund these amazing games!`;
+
+  const isOneGameFunded = totalUnfundedGames === 1;
+
+  return isOneGameFunded ? string1 : string2;
+} // getUnfundedGamesDescription()
+
+//================================================================================
+
+function getTotalRaisedForUnfunded() {
+  const unfundedGames = filterFundedOnly();
+
+  let total = Number(0);
+
+  unfundedGames.forEach((game) => {
+    total += game.pledged;
+  }); // foreach
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }); // NumberFormat()
+
+  const formattedTotal = formatter.format(total);
+
+  return formattedTotal;
+} // getTotalRaisedForUnfunded()
+
+//================================================================================
+
+// create a new DOM element containing the template string and append it to the description container
+
+function displayUnfundedGamesDescription() {
+  const para = document.createElement("p");
+
+  const description = getUnfundedGamesDescription();
+
+  para.append(description);
+
+  descriptionContainer.appendChild(para);
+} // displayUnfundedGamesDescription()
+
+displayUnfundedGamesDescription();
+
+/************************************************************************************
+ * Challenge 7: Select & display the top 2 games
+ * Skills used: spread operator, destructuring, template literals, sort
+ */
+
+const firstGameContainer = document.getElementById("first-game");
+const secondGameContainer = document.getElementById("second-game");
+
+const sortedGames = GAMES_JSON.sort((item1, item2) => {
+  return item2.pledged - item1.pledged;
+});
+
+// use destructuring and the spread operator to grab the first and second games
+
+const [first, second, ...others] = sortedGames;
+
+// create a new element to hold the name of the top pledge game, then append it to the correct element
+
+function displayTopFundedGame() {
+  const para = document.createElement("p");
+
+  para.append(first.name);
+
+  firstGameContainer.appendChild(para);
+} // displayTopFundedGame()
+
+displayTopFundedGame();
+
+// do the same for the runner up item
+
+function displayRunnerUp() {
+  const para = document.createElement("p");
+
+  para.append(second.name);
+
+  secondGameContainer.appendChild(para);
+} // displayRunnerUp()
+
+displayRunnerUp();
+
+//================================================================================

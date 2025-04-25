@@ -100,7 +100,7 @@ const games = ` [
     "img": "./assets/kingdom_death.png"
   }
 ]
-`
+`;
 const template = `
 {
 "name": "",
@@ -110,6 +110,6 @@ const template = `
 "backers": 0,
 "img": ""
 },
-`
+`;
 
 export default games;
