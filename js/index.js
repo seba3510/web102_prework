@@ -57,7 +57,7 @@ function addGamesToPage(games) {
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
 
-addGamesToPage(GAMES_JSON);
+// addGamesToPage(GAMES_JSON);
 
 //================================================================================
 
@@ -228,6 +228,7 @@ function showAllGames() {
 
 } // showAllGames()
 
+// showAllGames();
 //========================================================
 
 // select each button in the "Our Games" section
@@ -271,17 +272,7 @@ fundedBtnClick();
 
 //================================================================================
 
-function allBtnClick() {
 
-	allBtn.addEventListener("click", ()=>{
-
-		showAllGames();
-		
-	}); // addEventListener()
-	
-} // allBtnClick()
-
-allBtnClick();
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
@@ -408,32 +399,35 @@ const  [first, second, ...others] =
 	sortedGames;
 
 
-// create a new element to hold the name of the top pledge game, then append it to the correct element
-
-function displayTopFundedGame(){
-
-	const para =
-		document.createElement("p");
-
-	para.append(first.name);
+	// create a new element to hold the name of the top pledge game, then append it to the correct element
 	
-	firstGameContainer.appendChild(para);
-
-} // displayTopFundedGame()
-
-displayTopFundedGame();
-
-// do the same for the runner up item
-
-function displayRunnerUp(){
-
-	const para =
+	function displayTopFundedGame(){
+		
+		const para =
 		document.createElement("p");
-
-	para.append(second.name);	
-
-	secondGameContainer.appendChild(para);
-
-} // displayRunnerUp()
-
-displayRunnerUp();
+		
+		para.append(first.name);
+		
+		firstGameContainer.appendChild(para);
+		
+	} // displayTopFundedGame()
+	
+	displayTopFundedGame();
+	
+	// do the same for the runner up item
+	
+	function displayRunnerUp(){
+		
+		const para =
+		document.createElement("p");
+		
+		para.append(second.name);	
+		
+		secondGameContainer.appendChild(para);
+		
+	} // displayRunnerUp()
+	
+	displayRunnerUp();
+	
+	
+	showAllGames();
