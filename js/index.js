@@ -57,7 +57,7 @@
 	// call the function we just defined using the correct variable
 	// later, we'll call this function using a different list of games
 
-	// addGamesToPage(GAMES_JSON);
+	addGamesToPage(GAMES_JSON);
 
 	//================================================================================
 
@@ -230,13 +230,12 @@
 		const tableBody =
 			document.createElement("tbody");
 
-		appendTableBody(tableBody, table);
+		appendTableBody(tableBody, table, GAMES_JSON);
 
 		tableContainer.appendChild(table);	
 
 	} // showAllGames()
 
-	// showAllGames();
 	//========================================================
 
 	// select each button in the "Our Games" section
@@ -244,8 +243,8 @@
 	const fundedBtn = document.getElementById("funded-btn");
 	const allBtn = document.getElementById("all-btn");
 
-function appendTableBody(tableBody, table) {
-	GAMES_JSON.forEach((game) => {
+function appendTableBody(tableBody, table, games) {
+	games.forEach((game) => {
 
 		const contentRow = document.createElement("tr");
 
@@ -289,9 +288,6 @@ function appendTableBody(tableBody, table) {
 
 function appendTableHeader(tableHeader, table) {
 
-	const tableHeader =
-		document.createElement("th");
-
 	const nameHeaderCell = document.createElement("th");
 
 	nameHeaderCell.textContent =
@@ -301,7 +297,7 @@ function appendTableHeader(tableHeader, table) {
 
 	const descriptionHeaderCell = document.createElement("th");
 
-	descriptionHeaderCell.innerText =
+	descriptionHeaderCell.innerHTML =
 		"Description";
 
 	tableHeader.appendChild(descriptionHeaderCell);
@@ -310,6 +306,9 @@ function appendTableHeader(tableHeader, table) {
 
 	posterHeaderCell.textContent =
 		"Cover Poster";
+
+	posterHeaderCell.style.textAlign =
+		"center"
 
 	tableHeader.appendChild(posterHeaderCell);
 
@@ -326,7 +325,20 @@ function appendTableHeader(tableHeader, table) {
 			const unfundedGames = 
 				filterUnfundedOnly();
 
-			addGamesToPage(unfundedGames);
+			const table =
+				document.createElement("table");	
+
+			const tableHeader =
+				document.createElement("thead");
+
+			appendTableHeader(tableHeader, table);
+			
+			const tableBody =
+				document.createElement("tbody");
+
+			appendTableBody(tableBody, table, unfundedGames);	
+
+			gamesContainer.appendChild(table);
 
 		}); // addEventListener()
 
@@ -510,4 +522,4 @@ function appendTableHeader(tableHeader, table) {
 	displayRunnerUp();
 
 
-		showAllGames();
+	showAllGames();
