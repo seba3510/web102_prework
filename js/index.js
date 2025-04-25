@@ -85,7 +85,8 @@ function getTotalContributions() {
 	const formattedTotal =
 		total.toLocaleString();
 		
-	return formattedTotal;	
+	contributionsCard.innerHTML =
+		formattedTotal;	
 
 } // getTotalContributions()
 
@@ -105,13 +106,12 @@ function getTotalAmountRaised() {
 	const total =
 		GAMES_JSON.reduce((acc, game) =>{
 
-			return acc +
-					game.pledged;
+			return acc + game.pledged;
 
 		},0);
 
 	const formatter =
-		new Int1.NumberFormat("en-US", {
+		new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: "USD",
 			minimumFractionDigits: 0,
@@ -120,10 +120,13 @@ function getTotalAmountRaised() {
 
 	const formattedTotal =
 		formatter.format(total);
+	
 		
 	return formattedTotal;	
 
 } // GetTotalAmountRaised()
+
+getTotalAmountRaised();
 
 //================================================================================
 
@@ -131,7 +134,7 @@ const totalRaised =
 	getTotalAmountRaised();
 
 // set inner HTML using template literal
-raisedCard.innerHTML = 
+raisedCard.innerHTML =
 	totalRaised;
 
 //================================================================================
@@ -152,14 +155,11 @@ function getTotalGamesPlayed() {
 	
 } // getTotalGamesPlayed()
 
-console.log(getTotalGamesPlayed())
-
-
 //================================================================================
 
 // grab number of games card and set its inner HTML
-const 
-	totalGamesPlayed = getTotalGamesPlayed();
+const totalGamesPlayed = 
+	getTotalGamesPlayed();
 
 const gamesCard = 
 	document.getElementById("num-games");
@@ -293,7 +293,6 @@ const descriptionContainer =
 	document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-
 function getTotalUnfundedGames() {
 
 	const total =
@@ -306,8 +305,7 @@ function getTotalUnfundedGames() {
 //================================================================================
 
 // create a string that explains the number of unfunded games using the ternary operator
-
-function displayNumUnfundedGames() {
+function getUnfundedGamesDescription() {
 
 	const totalRaised =
 		getTotalRaisedForUnfunded();
@@ -331,9 +329,7 @@ function displayNumUnfundedGames() {
 	return isOneGameFunded ? string1
 			: string2;
 
-} // displayNumUnfundedGames()
-
-displayNumUnfundedGames();
+} // getUnfundedGamesDescription()
 
 //================================================================================
 
@@ -370,6 +366,22 @@ function getTotalRaisedForUnfunded() {
 //================================================================================
 
 // create a new DOM element containing the template string and append it to the description container
+
+function displayUnfundedGamesDescription(){
+
+	const para =
+		document.createElement("p");
+
+	const description =
+		getUnfundedGamesDescription();
+		
+	para.append(description);
+	
+	descriptionContainer.appendChild(para);	
+
+} // displayUnfundedGamesDescription()
+
+displayUnfundedGamesDescription();
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
