@@ -284,7 +284,8 @@ function appendTableBody(tableBody, table, games) {
 	}); // foreach
 
 	table.appendChild(tableBody);
-}
+
+} // appendTableBody()
 
 function appendTableHeader(tableHeader, table) {
 
@@ -305,10 +306,8 @@ function appendTableHeader(tableHeader, table) {
 	const posterHeaderCell = document.createElement("th");
 
 	posterHeaderCell.textContent =
-		"Cover Poster";
-
-	posterHeaderCell.style.textAlign =
-		"center"
+		"Image";
+	
 
 	tableHeader.appendChild(posterHeaderCell);
 
@@ -355,9 +354,6 @@ function appendTableHeader(tableHeader, table) {
 
 		fundedBtn.addEventListener("click", ()=>{
 
-			const unfundedGames = 
-			filterUnfundedOnly();
-
 		const table =
 			document.createElement("table");	
 
@@ -369,7 +365,7 @@ function appendTableHeader(tableHeader, table) {
 		const tableBody =
 			document.createElement("tbody");
 
-		appendTableBody(tableBody, table, unfundedGames);	
+		appendTableBody(tableBody, table, fundedGames);	
 
 		gamesContainer.appendChild(table);
 
