@@ -431,7 +431,7 @@ function appendTableHeader(tableHeader, table) {
 	function getUnfundedGamesDescription() {
 
 		const totalRaised =
-			getTotalRaisedForUnfunded();
+			getTotalAmountRaised();
 
 		const totalUnfundedGames =
 			getTotalUnfundedGames();
@@ -448,14 +448,14 @@ function appendTableHeader(tableHeader, table) {
 			`We need your help to fund these amazing games!`;
 		
 		const string2 =	
-			`A total of ${totalRaised} has been raised for ${totalUnfundedGames} games. `+
-			`Currently, ${remainingUnfundedGames} games remain unfunded.  `+
+			`A total of ${totalRaised} has been raised for ${totalGames} games. `+
+			`Currently, ${totalUnfundedGames} games remain unfunded.  `+
 			`We need your help to fund these amazing games!`;
 
 		const isOneGameFunded =
 			totalUnfundedGames === 1;
 
-		return isOneGameFunded ? string1
+		return 	isOneGameFunded ? string1
 				: string2;
 
 	} // getUnfundedGamesDescription()
