@@ -222,15 +222,15 @@
 		const table =
 			document.createElement("table");
 
-			
-
 		const tableHeader =
 			document.createElement("thead")	;
 
-		appendHeaderContents(tableHeader);			
+		appendTableHeader(tableHeader, table);			
 
-		table.appendChild(tableHeader);
+		const tableBody =
+			document.createElement("tbody");
 
+		appendTableBody(tableBody, table);
 
 		tableContainer.appendChild(table);	
 
@@ -244,7 +244,54 @@
 	const fundedBtn = document.getElementById("funded-btn");
 	const allBtn = document.getElementById("all-btn");
 
-function appendHeaderContents(tableHeader) {
+function appendTableBody(tableBody, table) {
+	GAMES_JSON.forEach((game) => {
+
+		const contentRow = document.createElement("tr");
+
+		const nameCell = document.createElement("td");
+
+		nameCell.style.textAlign =
+			"left";
+
+		nameCell.innerHTML =
+			game.name;
+
+		contentRow.appendChild(nameCell);
+
+		const descriptionCell = document.createElement("td");
+
+		descriptionCell.style.textAlign =
+			"left";
+
+		descriptionCell.innerHTML =
+			game.description;
+
+		contentRow.appendChild(descriptionCell);
+
+		const posterCell = document.createElement("td");
+
+
+		const poster = document.createElement("img");
+
+		poster.setAttribute("src", `${game.img}`);
+
+		posterCell.append(poster);
+
+		contentRow.appendChild(posterCell);
+
+		tableBody.append(contentRow);
+
+	}); // foreach
+
+	table.appendChild(tableBody);
+}
+
+function appendTableHeader(tableHeader, table) {
+
+	const tableHeader =
+		document.createElement("th");
+
 	const nameHeaderCell = document.createElement("th");
 
 	nameHeaderCell.textContent =
@@ -265,7 +312,10 @@ function appendHeaderContents(tableHeader) {
 		"Cover Poster";
 
 	tableHeader.appendChild(posterHeaderCell);
-}
+
+	table.appendChild(tableHeader);
+
+} // appendTableHeader()
 
 	// add event listeners with the correct functions to each button
 
