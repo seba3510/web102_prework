@@ -407,7 +407,6 @@ const sortedGames = GAMES_JSON.sort((item1, item2) => {
 const  [first, second, ...others] =
 	sortedGames;
 
-console.log(first);	
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 
