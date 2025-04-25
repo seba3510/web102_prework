@@ -355,7 +355,23 @@ function appendTableHeader(tableHeader, table) {
 
 		fundedBtn.addEventListener("click", ()=>{
 
-			addGamesToPage(fundedGames);
+			const unfundedGames = 
+			filterUnfundedOnly();
+
+		const table =
+			document.createElement("table");	
+
+		const tableHeader =
+			document.createElement("thead");
+
+		appendTableHeader(tableHeader, table);
+		
+		const tableBody =
+			document.createElement("tbody");
+
+		appendTableBody(tableBody, table, unfundedGames);	
+
+		gamesContainer.appendChild(table);
 
 		}); // addEventListener()
 		
@@ -365,7 +381,17 @@ function appendTableHeader(tableHeader, table) {
 
 	//================================================================================
 
+	function allBtnClick(){
 
+		allBtn.addEventListener("click", ()=>{
+
+			showAllGames();
+
+		});
+
+	} // allBtnClick()
+
+	
 
 	/*************************************************************************************
 	 * Challenge 6: Add more information at the top of the page about the company.
@@ -521,5 +547,4 @@ function appendTableHeader(tableHeader, table) {
 		
 	displayRunnerUp();
 
-
-	showAllGames();
+	allBtnClick();
