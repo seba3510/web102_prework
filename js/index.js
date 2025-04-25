@@ -449,7 +449,7 @@ function appendTableHeader(tableHeader, table) {
 		
 		const string2 =	
 			`A total of ${totalRaised} has been raised for ${totalGames} games. `+
-			`Currently, ${totalUnfundedGames} games remain unfunded.  `+
+			`Currently, ${remainingUnfundedGames} games remain unfunded.  `+
 			`We need your help to fund these amazing games!`;
 
 		const isOneGameFunded =
