@@ -312,15 +312,21 @@ function getUnfundedGamesDescription() {
 
 	const totalUnfundedGames =
 		getTotalUnfundedGames();
+
+	const totalGames =
+		getTotalGamesPlayed();
+		
+	const remainingUnfundedGames =
+		totalGames - totalUnfundedGames;	
 		
 	const string1 =
-		`A total of ${totalRaised} has been raised for ${totalUnfundedGames} games.`+
+		`A total of ${totalRaised} has been raised for ${totalGames} games.`+
 		`Currently, 1 game remains unfunded.  `+
 		`We need your help to fund these amazing games!`;
 	
 	const string2 =	
 		`A total of ${totalRaised} has been raised for ${totalUnfundedGames} games.`+
-		`Currently, ${totalUnfundedGames} remain unfunded.  `+
+		`Currently, ${remainingUnfundedGames} games remain unfunded.  `+
 		`We need your help to fund these amazing games!`;
 
 	const isOneGameFunded =
