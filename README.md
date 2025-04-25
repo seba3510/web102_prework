@@ -35,7 +35,11 @@ GIF created with ...
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Some challenges that I encountered where the following:
+
+* Challenge #4: With this challenge,  I struggled to understand the problem at first. I initially thought the total money raised had to include only the unfunded games, rather than both funded and unfunded games.
+
+* Displaying each game in a table:  This was by far the most difficult challenge I faced. When I clicked the buttons to show only funded or unfunded games, everything worked fine. However, the issue arose when I tried to display all games. If I clicked that button first, it worked as expected. But after displaying only funded or unfunded games, clicking the "Show All Games" button created a second table inside the existing one. This resulted in multiple nested tables being displayed.
 
 ## License
 
