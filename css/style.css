@@ -83,3 +83,25 @@ button {
     margin: 1%;
     border-radius: 7px;
 }
+
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    /* align-items: center; */
+}
+
+table,
+tr,
+td,
+th,
+tbody,
+thead {
+    border: 1px solid black;
+    text-align: center;
+}
+
+thead th {
+    /* background-color: rgba(26, 26, 27, 0.301); */
+    color: white;
+}
