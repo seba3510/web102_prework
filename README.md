@@ -37,7 +37,7 @@ GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
 
 ## Notes
 
-Some challenges that I encountered where the following:
+Some challenges that I encountered were the following:
 
 - Challenge #4: With this challenge, I struggled to understand the problem at first. I initially thought the total money raised had to include only the unfunded games, rather than both funded and unfunded games.
 
