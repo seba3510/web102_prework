@@ -1,4 +1,4 @@
-# WEB102 Prework - *SeaMonsterFundingApp*
+# WEB102 Prework - _SeaMonsterFundingApp_
 
 Submitted by: **Sebastián L. Corporán Berríos**
 
@@ -10,25 +10,26 @@ Time spent: **16** hours spent in total
 
 The following **required** functionality is completed:
 
-* [X] The introduction section explains the background of the company and how many games remain unfunded.
-* [X] The Stats section includes information about the total contributions and dollars raised as well as the top two most funded games.
-* [X] The Our Games section initially displays all games funded by Sea Monster Crowdfunding
-* [X] The Our Games section has three buttons that allow the user to display only unfunded games, only funded games, or all games.
+- [x] The introduction section explains the background of the company and how many games remain unfunded.
+- [x] The Stats section includes information about the total contributions and dollars raised as well as the top two most funded games.
+- [x] The Our Games section initially displays all games funded by Sea Monster Crowdfunding
+- [x] The Our Games section has three buttons that allow the user to display only unfunded games, only funded games, or all games.
 
 The following **optional** features are implemented:
 
-* [X] Display all games in a dynamically created table
-* [X] Change name of title bar, and add an icon
+- [x] Display all games in a dynamically created table
+- [x] Change name of title bar, and add an icon
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented features:
 
-<img src='./Walkthrough.gif' title='Video Walkthrough' alt='Video Walkthrough' />
-
+<img src='./assets/Walkthrough.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
+
 GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
+
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -38,9 +39,9 @@ GIF created with [ScreenToGif](https://www.screentogif.com/) for Windows
 
 Some challenges that I encountered where the following:
 
-* Challenge #4: With this challenge,  I struggled to understand the problem at first. I initially thought the total money raised had to include only the unfunded games, rather than both funded and unfunded games.
+- Challenge #4: With this challenge, I struggled to understand the problem at first. I initially thought the total money raised had to include only the unfunded games, rather than both funded and unfunded games.
 
-* Displaying each game in a table:  This was by far the most difficult challenge I faced. When I clicked the buttons to show only funded or unfunded games, everything worked fine. However, the issue arose when I tried to display all games. If I clicked that button first, it worked as expected. But after displaying only funded or unfunded games, clicking the "Show All Games" button created a second table inside the existing one. This resulted in multiple nested tables being displayed.
+- Displaying each game in a table: This was by far the most difficult challenge I faced. When I clicked the buttons to show only funded or unfunded games, everything worked fine. However, the issue arose when I tried to display all games. If I clicked that button first, it worked as expected. But after displaying only funded or unfunded games, clicking the "Show All Games" button created a second table inside the existing one. This resulted in multiple nested tables being displayed.
 
 ## License
 
