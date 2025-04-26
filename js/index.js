@@ -227,7 +227,7 @@ function appendTableBody(tableBody, table, games) {
 function appendTableHeader(tableHeader, table) {
   const nameHeaderCell = document.createElement("th");
 
-  nameHeaderCell.textContent = "Game";
+  nameHeaderCell.innerHTML = "Game";
 
   tableHeader.appendChild(nameHeaderCell);
 
@@ -239,7 +239,7 @@ function appendTableHeader(tableHeader, table) {
 
   const posterHeaderCell = document.createElement("th");
 
-  posterHeaderCell.textContent = "Image";
+  posterHeaderCell.innerHTML = "Image";
 
   tableHeader.appendChild(posterHeaderCell);
 
