@@ -167,15 +167,6 @@ function filterFundedOnly() {
 
 //=====================================================================
 
-// show all games
-function showAllGames() {
-  // deleteChildElements(gamesContainer);
-
-  addGamesToPage(GAMES_JSON);
-} // showAllGames()
-
-//========================================================
-
 // select each button in the "Our Games" section
 const unfundedBtn = document.getElementById("unfunded-btn");
 const fundedBtn = document.getElementById("funded-btn");
@@ -192,15 +183,11 @@ function appendTableBody(tableBody, table, games) {
 
     nameCell.innerHTML = game.name;
 
-    // contentRow.appendChild(nameCell);
-
     const descriptionCell = document.createElement("td");
 
     descriptionCell.style.textAlign = "left";
 
     descriptionCell.innerHTML = game.description;
-
-    // contentRow.appendChild(descriptionCell);
 
     const posterCell = document.createElement("td");
 
@@ -209,8 +196,6 @@ function appendTableBody(tableBody, table, games) {
     poster.setAttribute("src", `${game.img}`);
 
     posterCell.appendChild(poster);
-
-    // contentRow.append(posterCell);
 
     contentRow.append(nameCell);
 
@@ -223,6 +208,8 @@ function appendTableBody(tableBody, table, games) {
 
   table.appendChild(tableBody);
 } // appendTableBody()
+
+//=====================================================================
 
 function appendTableHeader(tableHeader, table) {
   const nameHeaderCell = document.createElement("th");
@@ -246,14 +233,12 @@ function appendTableHeader(tableHeader, table) {
   table.appendChild(tableHeader);
 } // appendTableHeader()
 
+//=====================================================================
+
 // add event listeners with the correct functions to each button
 
 function unfundedBtnClick() {
   unfundedBtn.addEventListener("click", () => {
-    // deleteChildElements(gamesContainer);
-
-    // clearTable();
-
     const unfundedGames = filterUnfundedOnly();
 
     const table = document.createElement("table");
@@ -275,8 +260,6 @@ unfundedBtnClick();
 
 function fundedBtnClick() {
   fundedBtn.addEventListener("click", () => {
-    // deleteChildElements(gamesContainer);
-
     const fundedGames = filterFundedOnly();
 
     const table = document.createElement("table");
@@ -307,9 +290,13 @@ function allBtnClick() {
 
     const tableBody = document.createElement("tbody");
 
-    appendTableBody(tableBody, table, filterFundedOnly());
+    const fundedGames = filterFundedOnly();
 
-    appendTableBody(tableBody, table, filterUnfundedOnly());
+    const unfundedGames = filterUnfundedOnly();
+
+    appendTableBody(tableBody, table, fundedGames);
+
+    appendTableBody(tableBody, table, unfundedGames);
 
     gamesContainer.appendChild(table);
   });
@@ -361,29 +348,6 @@ function getUnfundedGamesDescription() {
 
 //================================================================================
 
-function getTotalRaisedForUnfunded() {
-  const unfundedGames = filterFundedOnly();
-
-  let total = Number(0);
-
-  unfundedGames.forEach((game) => {
-    total += game.pledged;
-  }); // foreach
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }); // NumberFormat()
-
-  const formattedTotal = formatter.format(total);
-
-  return formattedTotal;
-} // getTotalRaisedForUnfunded()
-
-//================================================================================
-
 // create a new DOM element containing the template string and append it to the description container
 
 function displayUnfundedGamesDescription() {
@@ -425,6 +389,8 @@ function displayTopFundedGame() {
 } // displayTopFundedGame()
 
 displayTopFundedGame();
+
+//============================================================================
 
 // do the same for the runner up item
 
