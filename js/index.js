@@ -15,9 +15,6 @@ function deleteChildElements(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
-	while (parent.firstChild) {
-		parent.removeChild(parent.firstChild);
-	}
 }
 
 /*****************************************************************************
