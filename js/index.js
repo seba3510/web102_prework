@@ -5,6 +5,7 @@
  */
 
 // import the JSON data about the crowd funded games from the games.js file
+import games from "./games.js";
 import GAMES_DATA from "./games.js";
 
 // create a list of objects to store the data about the games using JSON.parse
@@ -313,9 +314,13 @@ const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
 function getTotalUnfundedGames() {
-	const total = filterUnfundedOnly().length;
+	const unfundedGames = filterUnfundedOnly();
 
-	return total;
+	const total = unfundedGames.filter((game) => {
+		return game.pledged < game.goal;
+	});
+
+	return total.length;
 } // getTotalUnfundedGames()
 
 //================================================================================
@@ -324,11 +329,9 @@ function getTotalUnfundedGames() {
 function getUnfundedGamesDescription() {
 	const totalRaised = getTotalAmountRaised();
 
-	const totalUnfundedGames = getTotalUnfundedGames();
+	const remainingUnfundedGames = getTotalUnfundedGames();
 
 	const totalGames = getTotalGamesPlayed();
-
-	const remainingUnfundedGames = totalGames - totalUnfundedGames;
 
 	const string1 =
 		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
@@ -340,7 +343,7 @@ function getUnfundedGamesDescription() {
 		`Currently, ${remainingUnfundedGames} games remain unfunded.  ` +
 		`We need your help to fund these amazing games!`;
 
-	const isOneGameFunded = totalUnfundedGames === 1;
+	const isOneGameFunded = remainingUnfundedGames === 1;
 
 	return isOneGameFunded ? string1 : string2;
 } // getUnfundedGamesDescription()
