@@ -336,10 +336,6 @@ function getUnfundedGamesDescription() {
 	const string1 =
 		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
 		`Currently, 1 game remains unfunded.  ` +
-		`We need your help to fund these amazing games!`;
-	const string1 =
-		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
-		`Currently, 1 game remains unfunded.  ` +
 		`We need your help to fund this amazing game!`;
 
 	const string2 =
