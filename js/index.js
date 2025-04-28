@@ -5,7 +5,6 @@
  */
 
 // import the JSON data about the crowd funded games from the games.js file
-import games from "./games.js";
 import GAMES_DATA from "./games.js";
 
 // create a list of objects to store the data about the games using JSON.parse
@@ -13,6 +12,9 @@ const GAMES_JSON = JSON.parse(GAMES_DATA);
 
 // remove all child elements from a parent element in the DOM
 function deleteChildElements(parent) {
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
@@ -335,6 +337,10 @@ function getUnfundedGamesDescription() {
 		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
 		`Currently, 1 game remains unfunded.  ` +
 		`We need your help to fund these amazing games!`;
+	const string1 =
+		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
+		`Currently, 1 game remains unfunded.  ` +
+		`We need your help to fund this amazing game!`;
 
 	const string2 =
 		`A total of ${totalRaised} has been raised for ${totalGames} games. ` +
