@@ -316,11 +316,9 @@ const descriptionContainer = document.getElementById("description-container");
 function getTotalUnfundedGames() {
 	const unfundedGames = filterUnfundedOnly();
 
-	const total = unfundedGames.filter((game) => {
-		return game.pledged < game.goal;
-	});
+	const total = unfundedGames.length;
 
-	return total.length;
+	return total;
 } // getTotalUnfundedGames()
 
 //================================================================================
